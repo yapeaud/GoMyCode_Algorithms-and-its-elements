@@ -1,0 +1,39 @@
+ALGORITHM AnalysePhrase
+VAR
+    caractere : CHAR; // Le caractère lu
+    longueur, mots, voyelles : INTEGER; // Les compteurs
+    precedentEstEspace : BOOLEAN; // Pour détecter les débuts de mots
+BEGIN
+    // Initialisation des compteurs
+    longueur <- 0;
+    mots <- 0;
+    voyelles <- 0;
+    precedentEstEspace <- TRUE;
+
+    REPEAT
+        Lire(caractere); // Lire un caractère
+
+        IF caractere <> '.' THEN
+            // Incrémenter la longueur
+            longueur <- longueur + 1;
+
+            // Vérifier si c'est une voyelle
+            IF caractere IN ['a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'] THEN
+                voyelles <- voyelles + 1;
+            END_IF;
+
+            // Détecter un mot
+            IF caractere = ' ' THEN
+                precedentEstEspace <- TRUE;
+            ELSE IF precedentEstEspace THEN
+                mots <- mots + 1;
+                precedentEstEspace <- FALSE;
+            END_IF;
+        END_IF;
+    UNTIL caractere = '.';
+
+    // Affichage des résultats
+    Afficher("Longueur de la phrase: ", longueur);
+    Afficher("Nombre de mots: ", mots);
+    Afficher("Nombre de voyelles: ", voyelles);
+END
